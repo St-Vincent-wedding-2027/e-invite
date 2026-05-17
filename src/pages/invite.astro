@@ -6,14 +6,24 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 <!doctype html>
 <html lang="en">
 <head>
+	<meta charset="UTF-8" />
+
 	<title>{SITE_TITLE}</title>
 
-	<meta charset="UTF-8" />
-	<meta name="description" content={SITE_DESCRIPTION} />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta
+		name="description"
+		content={SITE_DESCRIPTION}
+	/>
+
+	<meta
+		name="viewport"
+		content="width=device-width, initial-scale=1.0"
+	/>
 
 	<style>
+
 		:root {
+
 			--bg1: #faf7f2;
 			--bg2: #f2e8de;
 
@@ -27,6 +37,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			--text: #4e4039;
 
 			--shadow: rgba(0,0,0,0.15);
+
 		}
 
 		* {
@@ -34,6 +45,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		}
 
 		body {
+
 			margin: 0;
 			min-height: 100vh;
 
@@ -44,36 +56,53 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			font-family: Georgia, serif;
 
 			background:
-				radial-gradient(circle at top, rgba(255,255,255,0.5), transparent 40%),
-				linear-gradient(to bottom, var(--bg1), var(--bg2));
+				linear-gradient(
+					to bottom,
+					var(--bg1),
+					var(--bg2)
+				);
 
 			color: var(--text);
 
 			overflow: hidden;
+
 		}
 
 		main {
+
 			text-align: center;
 			padding: 2rem;
+
 		}
 
 		h1 {
-			font-size: clamp(2.2rem, 5vw, 3.5rem);
+
+			font-size: clamp(2.4rem, 5vw, 3.6rem);
+
 			font-weight: 400;
+
 			letter-spacing: 2px;
+
 			margin-bottom: 1rem;
+
 		}
 
 		.subtitle {
+
 			font-size: 1.1rem;
+
 			opacity: 0.75;
+
 			margin-bottom: 3rem;
+
 		}
 
 		/* ENVELOPE */
 
 		.envelope-wrapper {
+
 			position: relative;
+
 			width: 340px;
 			height: 240px;
 
@@ -82,18 +111,26 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			cursor: pointer;
 
 			perspective: 1400px;
+
 		}
 
 		.envelope {
+
 			position: relative;
+
 			width: 100%;
 			height: 100%;
+
+			overflow: hidden;
+
 		}
 
 		/* BACK */
 
 		.envelope-back {
+
 			position: absolute;
+
 			inset: 0;
 
 			background: var(--envelope);
@@ -106,50 +143,66 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 			z-index: 1;
 
-			overflow: hidden;
 		}
 
 		/* SIDE SHAPES */
 
 		.envelope-back::before,
 		.envelope-back::after {
+
 			content: "";
 
 			position: absolute;
+
 			bottom: 0;
 
 			width: 50%;
 			height: 100%;
 
-			background: rgba(255,255,255,0.15);
+			background: rgba(255,255,255,0.12);
+
 		}
 
 		.envelope-back::before {
+
 			left: 0;
 
-			clip-path: polygon(0 100%, 100% 0, 100% 100%);
+			clip-path:
+				polygon(
+					0 100%,
+					100% 0,
+					100% 100%
+				);
+
 		}
 
 		.envelope-back::after {
+
 			right: 0;
 
-			clip-path: polygon(0 0, 100% 100%, 0 100%);
+			clip-path:
+				polygon(
+					0 0,
+					100% 100%,
+					0 100%
+				);
+
 		}
 
 		/* LETTER */
 
 		.letter {
+
 			position: absolute;
 
 			left: 50%;
-			bottom: 10px;
+
+			bottom: -165px;
 
 			width: 88%;
 			height: 190px;
 
-			transform:
-				translateX(-50%)
-				translateY(125px);
+			transform: translateX(-50%);
 
 			background: var(--paper);
 
@@ -161,28 +214,36 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			z-index: 3;
 
 			transition:
-				transform 1.3s cubic-bezier(.22,1,.36,1);
+				bottom 1.2s cubic-bezier(.22,1,.36,1);
 
 			display: flex;
 			align-items: center;
 			justify-content: center;
 
 			padding: 1.5rem;
+
 		}
 
 		.letter-content {
+
 			text-align: center;
-			opacity: 0.75;
+
+			opacity: 0.8;
+
 		}
 
 		.letter-content h2 {
+
 			margin: 0 0 0.5rem;
+
 			font-weight: 400;
+
 		}
 
 		/* FRONT FOLD */
 
 		.envelope-front {
+
 			position: absolute;
 
 			bottom: 0;
@@ -193,14 +254,21 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 			background: var(--envelope);
 
-			clip-path: polygon(0 100%, 50% 0, 100% 100%);
+			clip-path:
+				polygon(
+					0 100%,
+					50% 0,
+					100% 100%
+				);
 
 			z-index: 4;
+
 		}
 
-		/* FLAP */
+		/* TOP FLAP */
 
 		.flap {
+
 			position: absolute;
 
 			top: 0;
@@ -211,9 +279,14 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 			background: var(--envelope-dark);
 
-			clip-path: polygon(0 0, 50% 100%, 100% 0);
+			clip-path:
+				polygon(
+					0 0,
+					50% 100%,
+					100% 0
+				);
 
-			transform-origin: top center;
+			transform-origin: top;
 
 			transition:
 				transform 1s cubic-bezier(.77,0,.18,1);
@@ -221,11 +294,13 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			z-index: 6;
 
 			backface-visibility: hidden;
+
 		}
 
 		/* SEAL */
 
 		.seal {
+
 			position: absolute;
 
 			top: 78px;
@@ -257,35 +332,42 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			transition:
 				transform 0.5s ease,
 				opacity 0.5s ease;
+
 		}
 
-		/* OPEN STATE */
+		/* OPEN ANIMATION */
 
 		.envelope-wrapper.open .seal {
+
 			transform:
 				translateX(-50%)
 				scale(1.5)
 				rotate(25deg);
 
 			opacity: 0;
+
 		}
 
 		.envelope-wrapper.open .flap {
+
 			transform: rotateX(180deg);
+
 		}
 
 		.envelope-wrapper.open .letter {
-			transform:
-				translateX(-50%)
-				translateY(-70px);
+
+			bottom: 35px;
+
 		}
 
 		.footer {
+
 			margin-top: 2.5rem;
 
 			font-size: 0.95rem;
 
 			opacity: 0.65;
+
 		}
 
 		/* MOBILE */
@@ -293,14 +375,20 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		@media (max-width: 480px) {
 
 			.envelope-wrapper {
+
 				width: 300px;
-				height: 215px;
+				height: 210px;
+
 			}
 
 			.letter {
+
 				height: 170px;
+
 			}
+
 		}
+
 	</style>
 </head>
 
@@ -314,7 +402,10 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			Click the seal to open
 		</div>
 
-		<div class="envelope-wrapper" id="envelope">
+		<div
+			class="envelope-wrapper"
+			id="envelope"
+		>
 
 			<div class="envelope">
 
@@ -323,10 +414,13 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 				<div class="letter">
 
 					<div class="letter-content">
+
 						<h2>You’re Invited</h2>
+
 						<p>
 							Tap to open your invitation
 						</p>
+
 					</div>
 
 				</div>
@@ -335,7 +429,10 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 				<div class="flap"></div>
 
-				<div class="seal" id="seal">
+				<div
+					class="seal"
+					id="seal"
+				>
 					C&L
 				</div>
 
@@ -350,12 +447,21 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 	</main>
 
 	<script>
-		if (localStorage.getItem('wedding_access') !== 'true') {
+
+		if (
+			localStorage.getItem('wedding_access')
+			!== 'true'
+		) {
+
 			window.location.href = '/';
+
 		}
 
-		const seal = document.getElementById('seal');
-		const envelope = document.getElementById('envelope');
+		const seal =
+			document.getElementById('seal');
+
+		const envelope =
+			document.getElementById('envelope');
 
 		let opened = false;
 
@@ -368,10 +474,14 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			envelope.classList.add('open');
 
 			setTimeout(() => {
-				window.location.href = '/invitation.pdf';
+
+				window.location.href =
+					'/invitation.pdf';
+
 			}, 2200);
 
 		});
+
 	</script>
 
 </body>
