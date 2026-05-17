@@ -1,0 +1,85 @@
+---
+const SITE_TITLE = "Wedding Access";
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<title>{SITE_TITLE}</title>
+
+	<style>
+		body {
+			margin: 0;
+			height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: Georgia, serif;
+			background: linear-gradient(to bottom, #faf7f2, #f2e8de);
+		}
+
+		.card {
+			text-align: center;
+			padding: 40px;
+			background: white;
+			border-radius: 12px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+			width: 300px;
+		}
+
+		input {
+			width: 100%;
+			padding: 12px;
+			margin-top: 15px;
+			border-radius: 6px;
+			border: 1px solid #ddd;
+			font-size: 16px;
+		}
+
+		button {
+			margin-top: 15px;
+			width: 100%;
+			padding: 12px;
+			border: none;
+			border-radius: 6px;
+			background: #a44c58;
+			color: white;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		.error {
+			color: red;
+			margin-top: 10px;
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="card">
+		<h2>Private Invitation</h2>
+		<p>Enter password to continue</p>
+
+		<input type="password" id="pw" placeholder="Password" />
+		<button onclick="check()">Enter</button>
+
+		<div class="error" id="error">Incorrect password</div>
+	</div>
+
+	<script>
+		const PASSWORD = "2027"; // 👈 change this
+
+		function check() {
+			const val = document.getElementById('pw').value;
+
+			if (val === PASSWORD) {
+				localStorage.setItem('wedding_access', 'true');
+				window.location.href = '/invite';
+			} else {
+				document.getElementById('error').style.display = 'block';
+			}
+		}
+	</script>
+</body>
+</html>
