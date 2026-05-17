@@ -1,10 +1,4 @@
-<script>
-	if (localStorage.getItem('wedding_access') !== 'true') {
-		window.location.href = '/';
-	}
-</script>
 ---
-
 const SITE_TITLE = "Luke & Catherine";
 const SITE_DESCRIPTION = "Wedding Invitation";
 ---
@@ -12,7 +6,9 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 <!doctype html>
 <html lang="en">
 <head>
-	<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	<title>{SITE_TITLE}</title>
+	<meta name="description" content={SITE_DESCRIPTION} />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<style>
 		:root {
@@ -78,7 +74,6 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			overflow: hidden;
 		}
 
-		/* BACK TRIANGLES */
 		.envelope::before,
 		.envelope::after {
 			content: "";
@@ -110,43 +105,20 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			transform-origin: top;
 			transition: transform 1s ease;
 			z-index: 5;
-			box-shadow: 0 4px 8px rgba(0,0,0,0.08);
 		}
 
 		.letter {
 			position: absolute;
 			left: 50%;
-			bottom: 0;
+			bottom: -120px;
 			transform: translateX(-50%);
 			width: 88%;
 			height: 190px;
 			background: var(--paper);
 			border-radius: 6px;
 			box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-			transition: transform 1.2s ease;
+			transition: transform 1.2s ease, bottom 1.2s ease;
 			z-index: 2;
-		}
-
-		.letter::before {
-			content: "Luke & Catherine";
-			position: absolute;
-			top: 40px;
-			left: 50%;
-			transform: translateX(-50%);
-			font-size: 1.4rem;
-			letter-spacing: 1px;
-			color: var(--text);
-		}
-
-		.letter::after {
-			content: "Request the pleasure of your company";
-			position: absolute;
-			top: 90px;
-			left: 50%;
-			transform: translateX(-50%);
-			font-size: 0.9rem;
-			opacity: 0.7;
-			width: 80%;
 		}
 
 		.seal {
@@ -166,21 +138,11 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			font-size: 1rem;
 			font-weight: bold;
 			box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-			transition:
-				transform 0.5s ease,
-				opacity 0.5s ease;
+			transition: transform 0.5s ease, opacity 0.5s ease;
 		}
-
-		.footer {
-			margin-top: 2.5rem;
-			font-size: 0.95rem;
-			opacity: 0.65;
-		}
-
-		/* OPEN STATES */
 
 		.envelope-wrapper.open .seal {
-			transform: translateX(-50%) scale(1.5) rotate(25deg);
+			transform: translateX(-50%) scale(1.6) rotate(30deg);
 			opacity: 0;
 		}
 
@@ -189,22 +151,14 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		}
 
 		.envelope-wrapper.open .letter {
+			bottom: 20px;
 			transform: translateX(-50%) translateY(-90px);
 		}
 
-		@media (max-width: 600px) {
-			h1 {
-				font-size: 2.2rem;
-			}
-
-			.envelope-wrapper {
-				width: 280px;
-				height: 200px;
-			}
-
-			.letter {
-				height: 160px;
-			}
+		.footer {
+			margin-top: 2.5rem;
+			font-size: 0.95rem;
+			opacity: 0.65;
 		}
 	</style>
 </head>
@@ -221,15 +175,12 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		<div class="envelope-wrapper" id="envelope">
 
 			<div class="envelope">
-
 				<div class="letter"></div>
-
 				<div class="flap"></div>
 
 				<div class="seal" id="seal">
 					L&C
 				</div>
-
 			</div>
 		</div>
 
@@ -239,17 +190,19 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 	</main>
 
 	<script>
+		if (localStorage.getItem('wedding_access') !== 'true') {
+			window.location.href = '/';
+		}
+
 		const seal = document.getElementById('seal');
 		const envelope = document.getElementById('envelope');
 
 		seal.addEventListener('click', () => {
-
 			envelope.classList.add('open');
 
 			setTimeout(() => {
-				window.open('/invitation.pdf', '_blank');
+				window.location.href = '/invitation.pdf';
 			}, 1800);
-
 		});
 	</script>
 
