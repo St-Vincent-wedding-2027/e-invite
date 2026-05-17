@@ -6,6 +6,7 @@ const SITE_TITLE = "Wedding Access";
 <html lang="en">
 <head>
 	<title>{SITE_TITLE}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<style>
 		body {
@@ -34,6 +35,7 @@ const SITE_TITLE = "Wedding Access";
 			border-radius: 6px;
 			border: 1px solid #ddd;
 			font-size: 16px;
+			outline: none;
 		}
 
 		button {
@@ -46,6 +48,10 @@ const SITE_TITLE = "Wedding Access";
 			color: white;
 			font-size: 16px;
 			cursor: pointer;
+		}
+
+		button:hover {
+			opacity: 0.9;
 		}
 
 		.error {
@@ -62,24 +68,41 @@ const SITE_TITLE = "Wedding Access";
 		<p>Enter password to continue</p>
 
 		<input type="password" id="pw" placeholder="Password" />
-		<button onclick="check()">Enter</button>
+
+		<button id="enterBtn">Enter</button>
 
 		<div class="error" id="error">Incorrect password</div>
 	</div>
 
 	<script>
-		const PASSWORD = "2027"; // 👈 change this
+		const PASSWORD = "2027";
 
-		function check() {
-			const val = document.getElementById('pw').value;
+		const input = document.getElementById('pw');
+		const button = document.getElementById('enterBtn');
+		const error = document.getElementById('error');
+
+		function checkPassword() {
+			const val = input.value.trim();
 
 			if (val === PASSWORD) {
 				localStorage.setItem('wedding_access', 'true');
 				window.location.href = '/invite';
 			} else {
-				document.getElementById('error').style.display = 'block';
+				error.style.display = 'block';
 			}
 		}
+
+		button.addEventListener('click', checkPassword);
+
+		input.addEventListener('keydown', (e) => {
+			if (e.key === 'Enter') {
+				checkPassword();
+			}
+		});
+
+		input.addEventListener('input', () => {
+			error.style.display = 'none';
+		});
 	</script>
 </body>
 </html>
