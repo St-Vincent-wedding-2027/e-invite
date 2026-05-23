@@ -137,7 +137,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 	height: 360px;
 
 	overflow: hidden;
-
+	clip-path: inset(0 0 18% 0);
 	z-index: 3;
 
 	transition:
@@ -208,7 +208,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		}
 
 		.envelope-wrapper.open .flap {
-			transform: rotateX(180deg);
+			transform: rotateX(180deg) translateY(-10px);
 		}
 
 		/* 👇 key fix: more visible space when open */
