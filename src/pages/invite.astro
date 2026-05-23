@@ -51,6 +51,230 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		.subtitle {
 			font-size: 1.1rem;
 			opacity: 0.75;
+			margin-bottom: 2rem;
+		}
+
+		/* ENVELOPE WRAPPER */
+		.envelope-wrapper {
+			position: relative;
+			width: 360px;
+			height: 270px;
+			margin: 0 auto;
+		}
+
+		.envelope {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			z-index: 2;
+		}
+
+		.envelope-back {
+			position: absolute;
+			inset: 0;
+			background: var(--envelope);
+			border-radius: 14px;
+			box-shadow: 0 15px 35px var(--shadow);
+			z-index: 1;
+			transition: opacity 0.8s ease;
+		}
+
+		.envelope-front {
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			height: 68%;
+			background: var(--envelope);
+			clip-path: polygon(0 100%, 50% 0, 100% 100%);
+			z-index: 4;
+			transition: opacity 0.8s ease;
+		}
+
+		.flap {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 52%;
+			background: var(--envelope-dark);
+			clip-path: polygon(0 0, 50% 100%, 100% 0);
+			transform-origin: top;
+			z-index: 6;
+			transition: transform 1s ease, opacity 0.8s ease;
+		}
+
+		.seal {
+			position: absolute;
+			top: 78px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			background: var(--seal);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-weight: bold;
+			z-index: 10;
+			cursor: pointer;
+			transition: transform 0.5s ease, opacity 0.5s ease;
+		}
+
+		/* 🟡 PNG OVERLAY (NO LAYOUT IMPACT) */
+		.invite-wrap {
+			position: absolute;
+			top: 320px; /* sits BELOW envelope visually */
+			left: 50%;
+			transform: translateX(-50%);
+			width: 340px;
+
+			opacity: 0;
+			transform: translate(-50%, 20px);
+			transition: all 1s cubic-bezier(.22,1,.36,1);
+
+			pointer-events: none;
+		}
+
+		.invite-wrap.show {
+			opacity: 1;
+			transform: translate(-50%, 0);
+			pointer-events: auto;
+		}
+
+		.invite-wrap img {
+			width: 100%;
+			display: block;
+			border-radius: 12px;
+			box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+			background: white;
+		}
+
+		.click-hint {
+			margin-top: 0.8rem;
+			font-size: 0.85rem;
+			opacity: 0;
+			transform: translateY(6px);
+			transition: all 0.6s ease;
+		}
+
+		.click-hint.show {
+			opacity: 0.7;
+			transform: translateY(0);
+		}
+
+		.footer {
+			margin-top: 2.5rem;
+			font-size: 0.95rem;
+			opacity: 0.65;
+			line-height: 1.7;
+		}
+
+		/* OPEN STATES */
+		.envelope-wrapper.open .seal {
+			opacity: 0;
+			transform: translateX(-50%) scale(1.5) rotate(25deg);
+		}
+
+		.envelope-wrapper.open .flap {
+			transform: rotateX(180deg) translateY(-30px);
+			opacity: 0;
+		}
+
+		.envelope-wrapper.open .envelope-back,
+		.envelope-wrapper.open .envelope-front {
+			opacity: 0;
+		}
+	</style>
+</head>
+
+<body>
+
+<main>
+
+	<h1>Catherine & Luke</h1>
+
+	<div class="subtitle" id="subtitle">
+		Click the seal to open
+	</div>
+
+	<div class="envelope-wrapper" id="envelope">
+
+		<div class="envelope">
+			<div class="envelope-back"></div>
+			<div class="envelope-front"></div>
+			<div class="flap"></div>
+
+			<div class="seal" id="seal">C&L</div>
+		</div>
+
+		<!-- PNG (FLOATS, NO GAP ISSUES EVER) -->
+		<div class="invite-wrap" id="invite">
+			<img src="/Wedding Invite - 1.png" id="letter" />
+			<div class="click-hint" id="clickHint">
+				Click image to open your invitation
+			</div>
+		</div>
+
+	</div>
+
+	<div class="footer">
+		We cannot wait to celebrate with you<br />
+		Made by Luke ©
+	</div>
+
+</main>
+
+<script>
+	if (localStorage.getItem('wedding_access') !== 'true') {
+		window.location.href = '/';
+	}
+
+	const seal = document.getElementById('seal');
+	const envelope = document.getElementById('envelope');
+	const invite = document.getElementById('invite');
+	const clickHint = document.getElementById('clickHint');
+
+	let opened = false;
+
+	seal.addEventListener('click', () => {
+		if (opened) return;
+
+		opened = true;
+		envelope.classList.add('open');
+		invite.classList.add('show');
+
+		setTimeout(() => {
+			clickHint.classList.add('show');
+		}, 900);
+	});
+
+	invite.addEventListener('click', () => {
+		if (!opened) return;
+		window.open('/invitation.pdf#view=FitH', '_blank');
+	});
+</script>
+
+</body>
+</html>		}
+
+		main {
+			text-align: center;
+			padding: 2rem;
+		}
+
+		h1 {
+			font-size: clamp(2.4rem, 5vw, 3.6rem);
+			font-weight: 400;
+			letter-spacing: 2px;
+			margin-bottom: 1rem;
+		}
+
+		.subtitle {
+			font-size: 1.1rem;
+			opacity: 0.75;
 			margin-bottom: 2.2rem;
 		}
 
