@@ -7,11 +7,9 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-
 	<title>{SITE_TITLE}</title>
 
 	<meta name="description" content={SITE_DESCRIPTION} />
-
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<style>
@@ -19,7 +17,6 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		:root {
 			--bg1: #faf7f2;
 			--bg2: #f2e8de;
-			--paper: #fffdfb;
 			--envelope: #e7d6c6;
 			--envelope-dark: #dcc5b2;
 			--seal: #a44c58;
@@ -27,7 +24,9 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			--shadow: rgba(0,0,0,0.15);
 		}
 
-		* { box-sizing: border-box; }
+		* {
+			box-sizing: border-box;
+		}
 
 		body {
 			margin: 0;
@@ -106,7 +105,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			clip-path: polygon(0 0, 100% 100%, 0 100%);
 		}
 
-		/* LETTER */
+		/* LETTER (YOUR PNG) */
 		.letter {
 			position: absolute;
 			left: 50%;
@@ -114,31 +113,20 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			width: 88%;
 			height: 190px;
 			transform: translateX(-50%);
-			background: var(--paper);
+			background: white;
 			border-radius: 8px;
 			box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 			z-index: 3;
 			transition: bottom 1.2s cubic-bezier(.22,1,.36,1);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 1.5rem;
-		}
-.letter {
-	cursor: default;
-}
-
-.envelope-wrapper.open .letter {
-	cursor: pointer;
-}
-		.letter-content {
-			text-align: center;
-			opacity: 0.85;
+			overflow: hidden;
 		}
 
-		.letter-content h2 {
-			margin: 0;
-			font-weight: 400;
+		.invite-image {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			display: block;
+			background: white;
 		}
 
 		/* FRONT */
@@ -165,7 +153,6 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			transform-origin: top;
 			transition: transform 1s cubic-bezier(.77,0,.18,1);
 			z-index: 6;
-			backface-visibility: hidden;
 		}
 
 		/* SEAL */
@@ -201,38 +188,17 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			bottom: 65px;
 		}
 
+		.envelope-wrapper.open .letter {
+			cursor: pointer;
+		}
+
 		.footer {
 			margin-top: 2.5rem;
 			font-size: 0.95rem;
 			opacity: 0.65;
 		}
 
-		/* MODAL */
-		.pdf-modal {
-			position: fixed;
-			inset: 0;
-			background: rgba(0,0,0,0.92);
-			display: none;
-			flex-direction: column;
-			z-index: 9999;
-		}
-
-		.pdf-modal iframe {
-			flex: 1;
-			width: 100%;
-			border: none;
-			background: white;
-		}
-
-		.pdf-modal button {
-			padding: 1rem;
-			font-size: 1rem;
-			border: none;
-			cursor: pointer;
-			background: white;
-			font-family: Georgia, serif;
-		}
-
+		/* MOBILE */
 		@media (max-width: 480px) {
 			.envelope-wrapper {
 				width: 300px;
@@ -261,9 +227,11 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 				<div class="envelope-back"></div>
 
 				<div class="letter">
-					<div class="letter-content">
-						<h2>You’re Invited</h2>
-					</div>
+					<img
+						src="/Wedding Invite - 1.png"
+						alt="Wedding Invitation"
+						class="invite-image"
+					/>
 				</div>
 
 				<div class="envelope-front"></div>
@@ -280,55 +248,41 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 	</main>
 
-	<!-- PDF MODAL -->
-	<div id="pdfModal" class="pdf-modal">
-		<iframe src="/invitation.pdf#view=FitH"></iframe>
-		<button id="closePdf">Close</button>
-	</div>
+	<script>
 
-<script>
+		if (localStorage.getItem('wedding_access') !== 'true') {
+			window.location.href = '/';
+		}
 
-	if (localStorage.getItem('wedding_access') !== 'true') {
-		window.location.href = '/';
-	}
+		const seal = document.getElementById('seal');
+		const envelope = document.getElementById('envelope');
+		const letter = envelope.querySelector('.letter');
 
-	const seal = document.getElementById('seal');
-	const envelope = document.getElementById('envelope');
-	const letter = document.querySelector('.letter');
+		let opened = false;
 
-	let opened = false;
+		function openPDF() {
+			window.open('/invitation.pdf#view=FitH', '_blank', 'noopener,noreferrer');
+		}
 
-	function openPDF() {
-		// opens real PDF externally
-		window.open('/invitation.pdf', '_blank');
-	}
+		seal.addEventListener('click', () => {
 
-	// seal opens envelope first
-	seal.addEventListener('click', () => {
+			if (opened) return;
 
-		if (opened) return;
+			opened = true;
 
-		opened = true;
+			envelope.classList.add('open');
 
-		envelope.classList.add('open');
+		});
 
-		// after animation, allow letter click
-		setTimeout(() => {
-			letter.style.cursor = 'pointer';
-		}, 1200);
+		letter.addEventListener('click', () => {
 
-	});
+			if (!opened) return;
 
-	// letter becomes the "PDF cover page"
-	letter.addEventListener('click', () => {
+			openPDF();
 
-		if (!opened) return;
+		});
 
-		openPDF();
-
-	});
-
-</script>
+	</script>
 
 </body>
 </html>
