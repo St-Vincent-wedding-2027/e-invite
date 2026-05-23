@@ -103,6 +103,27 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			clip-path: polygon(0 0, 100% 100%, 0 100%);
 		}
 
+.envelope-pocket {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+
+	width: 100%;
+	height: 55%; /* bottom half of envelope */
+
+	background: var(--envelope);
+
+	z-index: 2; /* ABOVE PNG, BELOW front fold */
+
+	clip-path: polygon(
+		0 100%,
+		50% 0,
+		100% 100%
+	);
+
+	box-shadow: inset 0 10px 20px rgba(0,0,0,0.08);
+}
+
 		/* INVITE PNG */
 		.letter {
 	position: absolute;
@@ -220,7 +241,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			<div class="envelope">
 
 				<div class="envelope-back"></div>
-
+				<div class="envelope-pocket"></div>
 				<div class="letter">
 					<img src="/Wedding Invite - 1.png" class="invite-image" />
 				</div>
