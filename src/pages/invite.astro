@@ -52,21 +52,23 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			font-size: 1.1rem;
 			opacity: 0.75;
 			margin-bottom: 2rem;
-			transition: opacity 0.4s ease;
 		}
 
-		/* WRAPPER NOW CAN EXPAND */
+		/* CENTER BLOCK (IMPORTANT FIX) */
+		.center-stage {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 20px;
+		}
+
+		/* ENVELOPE */
 		.envelope-wrapper {
 			position: relative;
 			width: 360px;
 			height: 270px;
-			margin: auto;
-			transition: height 1.2s cubic-bezier(.22,1,.36,1);
-		}
-
-		/* EXPAND WHEN OPEN */
-		.envelope-wrapper.open {
-			height: 620px; /* 👈 key change */
+			perspective: 1400px;
+			z-index: 2;
 		}
 
 		.envelope {
@@ -110,33 +112,6 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			transition: transform 1s cubic-bezier(.77,0,.18,1), opacity 1s ease;
 		}
 
-		/* LETTER NOW IN FLOW (NOT FLOATING OUT OF PAGE) */
-		.letter {
-			position: relative;
-			margin: 1.5rem auto 0;
-			width: 100%;
-			max-width: 340px;
-
-			opacity: 0;
-			transform: translateY(40px) scale(0.98);
-
-			border-radius: 12px;
-			overflow: hidden;
-
-			box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-
-			transition: all 1.2s cubic-bezier(.22,1,.36,1);
-			pointer-events: none;
-		}
-
-		.invite-image {
-			width: 100%;
-			height: auto;
-			display: block;
-			object-fit: contain;
-			background: white;
-		}
-
 		.seal {
 			position: absolute;
 			top: 78px;
@@ -156,27 +131,33 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			transition: transform 0.5s ease, opacity 0.5s ease;
 		}
 
-		.click-hint {
-			margin-top: 0.8rem;
-			font-size: 0.85rem;
+		/* REVEAL AREA (THIS IS THE MAGIC FIX) */
+		.reveal-zone {
+			width: 100%;
+			max-width: 340px;
+			height: 0;
 			opacity: 0;
-			transform: translateY(8px);
-			transition: all 0.6s ease;
+			transform: translateY(20px);
+			overflow: hidden;
+			transition: all 1.2s cubic-bezier(.22,1,.36,1);
 		}
 
-		.click-hint.show {
-			opacity: 0.7;
+		.reveal-zone img {
+			width: 100%;
+			height: auto;
+			display: block;
+			border-radius: 12px;
+			box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+			background: white;
+		}
+
+		/* OPEN STATE EXPANDS SPACE */
+		.center-stage.open .reveal-zone {
+			height: 520px; /* controls space expansion */
+			opacity: 1;
 			transform: translateY(0);
 		}
 
-		.footer {
-			margin-top: 2.5rem;
-			font-size: 0.95rem;
-			opacity: 0.65;
-			line-height: 1.7;
-		}
-
-		/* OPEN STATES */
 		.envelope-wrapper.open .seal {
 			opacity: 0;
 			transform: translateX(-50%) scale(1.5) rotate(25deg);
@@ -192,19 +173,35 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			opacity: 0;
 		}
 
-		.envelope-wrapper.open .letter {
-			opacity: 1;
-			transform: translateY(0) scale(1);
-			pointer-events: auto;
+		/* FOOTER */
+		.footer {
+			margin-top: 2.5rem;
+			font-size: 0.95rem;
+			opacity: 0.65;
+			line-height: 1.7;
+		}
+
+		.click-hint {
+			margin-top: 0.6rem;
+			font-size: 0.85rem;
+			opacity: 0;
+			transform: translateY(8px);
+			transition: all 0.6s ease;
+		}
+
+		.center-stage.open + .footer .click-hint {
+			opacity: 0.7;
+			transform: translateY(0);
 		}
 
 		@media (max-width: 480px) {
 			.envelope-wrapper {
 				width: 310px;
+				height: 240px;
 			}
 
-			.envelope-wrapper.open {
-				height: 560px;
+			.center-stage.open .reveal-zone {
+				height: 440px;
 			}
 		}
 	</style>
@@ -216,26 +213,23 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 	<h1>Catherine & Luke</h1>
 
-	<div class="subtitle" id="subtitle">
-		Click the seal to open
-	</div>
+	<div class="subtitle">Click the seal to open</div>
 
-	<div class="envelope-wrapper" id="envelope">
+	<div class="center-stage" id="stage">
 
-		<div class="envelope">
+		<div class="envelope-wrapper" id="envelope">
 
-			<div class="envelope-back"></div>
-
-			<div class="seal" id="seal">C&L</div>
-
-			<div class="envelope-front"></div>
-			<div class="flap"></div>
+			<div class="envelope">
+				<div class="envelope-back"></div>
+				<div class="envelope-front"></div>
+				<div class="flap"></div>
+				<div class="seal" id="seal">C&L</div>
+			</div>
 
 		</div>
 
-		<!-- letter OUTSIDE envelope flow so it can expand layout -->
-		<div class="letter" id="letter">
-			<img src="/Wedding Invite - 1.png" class="invite-image" />
+		<div class="reveal-zone" id="reveal">
+			<img src="/Wedding Invite - 1.png" />
 		</div>
 
 	</div>
@@ -252,15 +246,10 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 </main>
 
 <script>
-	if (localStorage.getItem('wedding_access') !== 'true') {
-		window.location.href = '/';
-	}
-
 	const seal = document.getElementById('seal');
+	const stage = document.getElementById('stage');
 	const envelope = document.getElementById('envelope');
-	const letter = document.getElementById('letter');
 	const clickHint = document.getElementById('clickHint');
-	const subtitle = document.getElementById('subtitle');
 
 	let opened = false;
 
@@ -269,16 +258,11 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 		opened = true;
 		envelope.classList.add('open');
+		stage.classList.add('open');
 
 		setTimeout(() => {
-			subtitle.textContent = "Click the invite";
 			clickHint.classList.add('show');
 		}, 900);
-	});
-
-	letter.addEventListener('click', () => {
-		if (!opened) return;
-		window.open('/invitation.pdf#view=FitH', '_blank');
 	});
 </script>
 
