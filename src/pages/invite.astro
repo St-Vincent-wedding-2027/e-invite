@@ -124,7 +124,13 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			justify-content: center;
 			padding: 1.5rem;
 		}
+.letter {
+	cursor: default;
+}
 
+.envelope-wrapper.open .letter {
+	cursor: pointer;
+}
 		.letter-content {
 			text-align: center;
 			opacity: 0.85;
@@ -280,39 +286,49 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		<button id="closePdf">Close</button>
 	</div>
 
-	<script>
+<script>
 
-		if (localStorage.getItem('wedding_access') !== 'true') {
-			window.location.href = '/';
-		}
+	if (localStorage.getItem('wedding_access') !== 'true') {
+		window.location.href = '/';
+	}
 
-		const seal = document.getElementById('seal');
-		const envelope = document.getElementById('envelope');
+	const seal = document.getElementById('seal');
+	const envelope = document.getElementById('envelope');
+	const letter = document.querySelector('.letter');
 
-		const modal = document.getElementById('pdfModal');
-		const closeBtn = document.getElementById('closePdf');
+	let opened = false;
 
-		let opened = false;
+	function openPDF() {
+		// opens real PDF externally
+		window.open('/invitation.pdf', '_blank');
+	}
 
-		seal.addEventListener('click', () => {
+	// seal opens envelope first
+	seal.addEventListener('click', () => {
 
-			if (opened) return;
+		if (opened) return;
 
-			opened = true;
+		opened = true;
 
-			envelope.classList.add('open');
+		envelope.classList.add('open');
 
-			setTimeout(() => {
-				modal.style.display = 'flex';
-			}, 1200);
+		// after animation, allow letter click
+		setTimeout(() => {
+			letter.style.cursor = 'pointer';
+		}, 1200);
 
-		});
+	});
 
-		closeBtn.addEventListener('click', () => {
-			modal.style.display = 'none';
-		});
+	// letter becomes the "PDF cover page"
+	letter.addEventListener('click', () => {
 
-	</script>
+		if (!opened) return;
+
+		openPDF();
+
+	});
+
+</script>
 
 </body>
 </html>
