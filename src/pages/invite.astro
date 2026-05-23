@@ -6,6 +6,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 <!doctype html>
 <html lang="en">
 <head>
+
 	<meta charset="UTF-8" />
 
 	<title>{SITE_TITLE}</title>
@@ -99,7 +100,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 		}
 
-		/* ENVELOPE */
+		/* ENVELOPE WRAPPER */
 
 		.envelope-wrapper {
 
@@ -142,6 +143,9 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 				inset 0 1px 0 rgba(255,255,255,0.4);
 
 			z-index: 1;
+
+			transition:
+				opacity 1s ease;
 
 		}
 
@@ -195,12 +199,16 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			position: absolute;
 
 			left: 50%;
-			bottom: -255px;
+			bottom: -120px;
 
-			transform: translateX(-50%);
+			transform:
+				translateX(-50%)
+				scale(0.96);
 
 			width: 94%;
 			height: 430px;
+
+			opacity: 0;
 
 			z-index: 2;
 
@@ -213,9 +221,12 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 			cursor: pointer;
 
+			pointer-events: none;
+
 			transition:
 				bottom 1.2s cubic-bezier(.22,1,.36,1),
-				transform 1.2s ease;
+				transform 1.2s ease,
+				opacity 0.9s ease;
 
 		}
 
@@ -229,6 +240,8 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			background: white;
 
 			display: block;
+
+			border-radius: 12px;
 
 		}
 
@@ -254,6 +267,9 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			box-shadow:
 				inset 0 12px 20px rgba(0,0,0,0.08);
 
+			transition:
+				opacity 1s ease;
+
 		}
 
 		/* FRONT TRIANGLE */
@@ -278,6 +294,9 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 				);
 
 			z-index: 5;
+
+			transition:
+				opacity 1s ease;
 
 		}
 
@@ -353,18 +372,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 		}
 
-		/* ENVELOPE FADE */
-
-		.envelope-back,
-		.envelope-front,
-		.envelope-mask {
-
-			transition:
-				opacity 1s ease;
-
-		}
-
-		/* OPEN */
+		/* OPEN STATE */
 
 		.envelope-wrapper.open .seal {
 
@@ -401,9 +409,13 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 			transform:
 				translateX(-50%)
-				scale(1.04);
+				scale(1);
+
+			opacity: 1;
 
 			z-index: 20;
+
+			pointer-events: auto;
 
 		}
 
@@ -442,22 +454,24 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 			.letter {
 
-				height: 380px;
-
-				bottom: -225px;
+				width: 96%;
+				height: 370px;
 
 			}
 
 		}
 
 	</style>
+
 </head>
 
 <body>
 
 	<main>
 
-		<h1>Catherine & Luke</h1>
+		<h1>
+			Catherine & Luke
+		</h1>
 
 		<div
 			class="subtitle"
@@ -479,11 +493,13 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 					class="letter"
 					id="letter"
 				>
+
 					<img
 						src="/Wedding Invite - 1.png"
 						alt="Wedding Invitation"
 						class="invite-image"
 					/>
+
 				</div>
 
 				<div class="envelope-mask"></div>
@@ -504,11 +520,15 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		</div>
 
 		<div class="footer">
+
 			We cannot wait to celebrate with you
+
 			<br />
+
 			<span>
 				Made by Luke ©
 			</span>
+
 		</div>
 
 	</main>
