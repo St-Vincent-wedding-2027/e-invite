@@ -7,14 +7,12 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-
 	<title>{SITE_TITLE}</title>
 
 	<meta name="description" content={SITE_DESCRIPTION} />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<style>
-
 		:root {
 			--bg1: #faf7f2;
 			--bg2: #f2e8de;
@@ -25,9 +23,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			--shadow: rgba(0,0,0,0.15);
 		}
 
-		* {
-			box-sizing: border-box;
-		}
+		* { box-sizing: border-box; }
 
 		body {
 			margin: 0;
@@ -56,10 +52,11 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		.subtitle {
 			font-size: 1.1rem;
 			opacity: 0.75;
-			margin-bottom: 2rem;
+			margin-bottom: 2.5rem;
+			transition: opacity 0.4s ease;
 		}
 
-		/* ENVELOPE WRAPPER */
+		/* WRAPPER */
 		.envelope-wrapper {
 			position: relative;
 			width: 360px;
@@ -72,8 +69,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			position: relative;
 			width: 100%;
 			height: 100%;
-			overflow: hidden;
-			border-radius: 14px;
+			overflow: visible;
 		}
 
 		/* BACK */
@@ -81,13 +77,13 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			position: absolute;
 			inset: 0;
 			background: var(--envelope);
-			z-index: 1;
 			border-radius: 14px;
 			box-shadow: 0 15px 35px var(--shadow);
-			transition: opacity 0.8s ease;
+			z-index: 1;
+			transition: opacity 1s ease;
 		}
 
-		/* FRONT FOLD */
+		/* FRONT BASE */
 		.envelope-front {
 			position: absolute;
 			left: 0;
@@ -97,7 +93,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			background: var(--envelope);
 			clip-path: polygon(0 100%, 50% 0, 100% 100%);
 			z-index: 4;
-			transition: opacity 0.8s ease;
+			transition: opacity 1s ease;
 		}
 
 		/* FLAP */
@@ -111,7 +107,32 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			clip-path: polygon(0 0, 50% 100%, 100% 0);
 			transform-origin: top;
 			z-index: 6;
-			transition: transform 1s ease, opacity 0.8s ease;
+			transition: transform 1s cubic-bezier(.77,0,.18,1), opacity 1s ease;
+		}
+
+		/* LETTER */
+		.letter {
+			position: absolute;
+			left: 50%;
+			bottom: -240px;
+			transform: translateX(-50%) scale(0.96);
+			width: 94%;
+			height: 430px;
+			opacity: 0;
+			z-index: 2;
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+			transition: all 1.2s cubic-bezier(.22,1,.36,1);
+			pointer-events: none;
+		}
+
+		.invite-image {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			background: white;
+			display: block;
 		}
 
 		/* SEAL */
@@ -134,55 +155,37 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			transition: transform 0.5s ease, opacity 0.5s ease;
 		}
 
-		/* LETTER (HIDDEN INITIALLY) */
-		.letter {
-			position: absolute;
-			left: 50%;
-			bottom: -240px;
-			transform: translateX(-50%) scale(0.95);
-			width: 94%;
-			height: 430px;
+		/* CLICK HINT */
+		.click-hint {
+			margin-top: 0.6rem;
+			font-size: 0.85rem;
 			opacity: 0;
-			z-index: 2;
-			border-radius: 12px;
-			overflow: hidden;
-			box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-			transition: all 1.2s cubic-bezier(.22,1,.36,1);
+			transform: translateY(6px);
+			transition: all 0.6s ease;
 			pointer-events: none;
 		}
 
-		.invite-image {
-			width: 100%;
-			height: 100%;
-			object-fit: contain;
-			background: white;
-		}
-
-		/* CLICK HINT */
-		.click-hint {
-			margin-top: 0.8rem;
-			font-size: 0.85rem;
-			opacity: 0;
-			transform: translateY(8px);
-			transition: all 0.6s ease;
+		.click-hint.show {
+			opacity: 0.7;
+			transform: translateY(0);
 		}
 
 		/* FOOTER */
 		.footer {
-			margin-top: 2rem;
+			margin-top: 2.5rem;
 			font-size: 0.95rem;
 			opacity: 0.65;
-			line-height: 1.6;
+			line-height: 1.7;
 		}
 
 		/* OPEN STATE */
 		.envelope-wrapper.open .seal {
 			opacity: 0;
-			transform: translateX(-50%) scale(1.5) rotate(20deg);
+			transform: translateX(-50%) scale(1.5) rotate(25deg);
 		}
 
 		.envelope-wrapper.open .flap {
-			transform: rotateX(180deg);
+			transform: rotateX(180deg) translateY(-30px);
 			opacity: 0;
 		}
 
@@ -196,13 +199,20 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			opacity: 1;
 			transform: translateX(-50%) scale(1);
 			pointer-events: auto;
+			z-index: 20;
 		}
 
-		.envelope-wrapper.open + main .click-hint {
-			opacity: 0.7;
-			transform: translateY(0);
-		}
+		/* MOBILE */
+		@media (max-width: 480px) {
+			.envelope-wrapper {
+				width: 310px;
+				height: 240px;
+			}
 
+			.letter {
+				height: 380px;
+			}
+		}
 	</style>
 </head>
 
@@ -239,13 +249,16 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			Made by Luke ©
 
 			<div class="click-hint" id="clickHint">
-				Click image to open your invite
+				Click image to open your invitation
 			</div>
 		</div>
 
 	</main>
 
 	<script>
+		if (localStorage.getItem('wedding_access') !== 'true') {
+			window.location.href = '/';
+		}
 
 		const seal = document.getElementById('seal');
 		const envelope = document.getElementById('envelope');
@@ -256,30 +269,21 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		let opened = false;
 
 		seal.addEventListener('click', () => {
-
 			if (opened) return;
 
 			opened = true;
-
 			envelope.classList.add('open');
-
-			clickHint.style.opacity = '0.7';
-			clickHint.style.transform = 'translateY(0)';
 
 			setTimeout(() => {
 				subtitle.textContent = "Click the invite";
+				clickHint.classList.add('show');
 			}, 800);
-
 		});
 
 		letter.addEventListener('click', () => {
-
 			if (!opened) return;
-
 			window.open('/invitation.pdf#view=FitH', '_blank');
-
 		});
-
 	</script>
 
 </body>
