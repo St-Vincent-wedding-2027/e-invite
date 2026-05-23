@@ -220,11 +220,19 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			bottom: 0;
 
 			width: 100%;
-			height: 38%;
+			height: 72%;
 
 			background: var(--envelope);
+			z-index: 4;
+			clip-path: polygon(
+		0 100%,
+		50% 0,
+		100% 100%
+	);
 
-			z-index: 5;
+	/* soft depth */
+	box-shadow:
+		inset 0 12px 20px rgba(0,0,0,0.08);
 		}
 
 		/* TOP FLAP */
