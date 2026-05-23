@@ -7,8 +7,8 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<title>{SITE_TITLE}</title>
 
+	<title>{SITE_TITLE}</title>
 	<meta name="description" content={SITE_DESCRIPTION} />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -20,13 +20,10 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			--envelope: #e7d6c6;
 			--envelope-dark: #dcc5b2;
 			--seal: #a44c58;
-			--text: #4e4039;
 			--shadow: rgba(0,0,0,0.15);
 		}
 
-		* {
-			box-sizing: border-box;
-		}
+		* { box-sizing: border-box; }
 
 		body {
 			margin: 0;
@@ -36,7 +33,6 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			justify-content: center;
 			font-family: Georgia, serif;
 			background: linear-gradient(to bottom, var(--bg1), var(--bg2));
-			color: var(--text);
 			overflow: hidden;
 		}
 
@@ -105,20 +101,22 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			clip-path: polygon(0 0, 100% 100%, 0 100%);
 		}
 
-		/* LETTER (YOUR PNG) */
+		/* PNG LETTER (THE INVITE) */
 		.letter {
 			position: absolute;
 			left: 50%;
-			bottom: -165px;
+			bottom: -170px; /* partially hidden inside envelope */
+			transform: translateX(-50%);
 			width: 88%;
 			height: 190px;
-			transform: translateX(-50%);
-			background: white;
-			border-radius: 8px;
-			box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 			z-index: 3;
+
 			transition: bottom 1.2s cubic-bezier(.22,1,.36,1);
+
+			border-radius: 8px;
 			overflow: hidden;
+
+			box-shadow: 0 5px 15px rgba(0,0,0,0.10);
 		}
 
 		.invite-image {
@@ -184,6 +182,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			transform: rotateX(180deg);
 		}
 
+		/* lift the PNG out */
 		.envelope-wrapper.open .letter {
 			bottom: 65px;
 		}
@@ -198,7 +197,6 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			opacity: 0.65;
 		}
 
-		/* MOBILE */
 		@media (max-width: 480px) {
 			.envelope-wrapper {
 				width: 300px;
@@ -217,7 +215,6 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 	<main>
 
 		<h1>Catherine & Luke</h1>
-
 		<div class="subtitle">Click the seal to open</div>
 
 		<div class="envelope-wrapper" id="envelope">
@@ -226,6 +223,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 				<div class="envelope-back"></div>
 
+				<!-- PNG replaces letter -->
 				<div class="letter">
 					<img
 						src="/Wedding Invite - 1.png"
@@ -269,7 +267,6 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			if (opened) return;
 
 			opened = true;
-
 			envelope.classList.add('open');
 
 		});
