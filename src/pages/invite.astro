@@ -213,27 +213,29 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 		/* RECTANGLE MASK */
 
-		.envelope-mask {
-			position: absolute;
+		/* RECTANGLE MASK */
 
-			left: 0;
-			bottom: 0;
+.envelope-mask {
+	position: absolute;
 
-			width: 100%;
-			height: 72%;
+	left: 0;
+	bottom: 0;
 
-			background: var(--envelope);
-			z-index: 4;
-			clip-path: polygon(
-		0 100%,
-		50% 0,
-		100% 100%
-	);
+	width: 100%;
+	height: 72%;
 
-	/* soft depth */
+	background: var(--envelope);
+
+	z-index: 4;
+
+	/* NO clip-path */
+
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+
 	box-shadow:
 		inset 0 12px 20px rgba(0,0,0,0.08);
-		}
+}
 
 		/* TOP FLAP */
 
