@@ -113,19 +113,19 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 		/* LETTER */
 		.letter {
-			position: absolute;
+			position: fixed;
 			left: 50%;
-			bottom: -220px;
-			transform: translateX(-50%) scale(0.95);
-
-			width: 95%;
-			height: 430px;
+			top: 50%
+		
+			transform: translateX(-50%, 80%) scale(0.95);
+			width: min(520px, 92vw);
+			height: auto;
 
 			opacity: 0;
 			pointer-events: none;
 
 			transition: all 1s cubic-bezier(.23, 1, .32, 1);
-			z-index: 2;
+			z-index: 200;
 		}
 
 		.letter-card {
@@ -212,9 +212,8 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 		.envelope-wrapper.open .letter {
 			opacity: 1;
-			transform: translateX(-50%) scale(1);
+			transform: translateX(-50%, -20%) scale(1);
 			pointer-events: auto;
-			z-index: 100;
 		}
 
 		/* MOBILE */
