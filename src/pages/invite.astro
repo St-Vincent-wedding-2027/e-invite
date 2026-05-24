@@ -51,7 +51,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		.page-header {
 			margin-bottom: 2rem;
 			position: relative;
-			z-index: 10;
+			z-index: 20;
 		}
 
 		h1 {
@@ -117,7 +117,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			opacity: 0;
 			width: min(520px, 92vw);
 			pointer-events: none;
-			z-index: 1;
+			z-index: 10;
 			transition: 1s cubic-bezier(.23, 1, .32, 1), opacity 0.8s ease;
 		}
 
@@ -259,10 +259,13 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 	});
 
 	setTimeout(() => {
-		if (!opened) {
-			window.open('/invitation.pdf#view=FitH', '_blank');
-		}
-	}, 5000);
+	if (opened || autoOpened) return;
+
+	autoOpened = true;
+
+	// redirect instead of popup
+	window.location.href = '/invitation.pdf#view=FitH';
+}, 5000);
 </script>
 
 </body>
