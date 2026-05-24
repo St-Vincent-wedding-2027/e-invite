@@ -128,7 +128,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 		.envelope-wrapper.open .letter {
 			opacity: 1;
-			transform: translate(-50%, -50%) scale(1);
+			transform: translate(-50%, -40%) scale(1);
 			pointer-events: auto;
 			z-index: 999;
 		}
@@ -253,7 +253,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		envelope.classList.add('open');
 
 		setTimeout(() => {
-			subtitle.textContent = 'Your invitation is ready';
+			subtitle.textContent = 'Your invitation is ready! Click to open';
 			clickHint.classList.add('show');
 		}, 900);
 	});
