@@ -29,27 +29,30 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		* {
 			box-sizing: border-box;
 		}
-
+			.page-header {
+	margin-bottom: 2rem;
+}
 		body {
-			margin: 0;
-			font-family: Georgia, serif;
-			background: radial-gradient(circle at top, var(--bg1), var(--bg2));
-			color: var(--text);
-			min-height: 100vh;
+	margin: 0;
+	font-family: Georgia, serif;
+	background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+	color: var(--text);
+	min-height: 100vh;
 
-			display: flex;
-			align-items: center;
-			justify-content: center;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
 
-			padding: 2rem;
-			text-align: center;
-			overflow-x: hidden;
-		}
+	padding: 2rem;
+	text-align: center;
+	overflow-x: hidden;
+}
 
-		main {
-			max-width: 520px;
-			width: 100%;
-		}
+main {
+	max-width: 520px;
+	width: 100%;
+	margin-top: 2vh;
+}
 
 		h1 {
 			font-size: clamp(2.5rem, 5vw, 4rem);
@@ -243,11 +246,12 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 <main>
 
+	<header class="page-header">
 	<h1>Catherine & Luke</h1>
-
 	<div class="subtitle" id="subtitle">
-		You are invited!
+		You are invited
 	</div>
+</header>
 
 	<div class="envelope-wrapper" id="envelope">
 
