@@ -16,12 +16,9 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		:root {
 			--bg1: #faf7f2;
 			--bg2: #f2e8de;
-
 			--envelope: #e8d5c4;
 			--envelope-dark: #d7bea7;
-
 			--seal: #b08d6d;
-
 			--text: #3d352f;
 			--shadow: rgba(0, 0, 0, 0.18);
 		}
@@ -38,7 +35,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			min-height: 100vh;
 
 			display: flex;
-			align-items: flex-start;
+			align-items: center;
 			justify-content: center;
 
 			padding: 2rem;
@@ -49,15 +46,12 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		main {
 			max-width: 520px;
 			width: 100%;
-			margin-top: 2vh;
 		}
-
-		/* ================= HEADER FIX ================= */
 
 		.page-header {
 			margin-bottom: 2rem;
 			position: relative;
-			z-index: 10; /* keeps header above letter */
+			z-index: 10;
 		}
 
 		h1 {
@@ -71,10 +65,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			font-size: 1.1rem;
 			opacity: 0.75;
 			margin-bottom: 2.5rem;
-			transition: opacity 0.4s ease;
 		}
-
-		/* ================= ENVELOPE ================= */
 
 		.envelope-wrapper {
 			position: relative;
@@ -82,7 +73,6 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			height: 280px;
 			margin: 0 auto;
 			perspective: 1200px;
-			z-index: 1;
 		}
 
 		.envelope {
@@ -97,7 +87,6 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			background: var(--envelope);
 			border-radius: 14px;
 			box-shadow: 0 18px 40px var(--shadow);
-			z-index: 1;
 		}
 
 		.envelope-front {
@@ -106,59 +95,42 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			height: 58%;
 			background: var(--envelope);
 			clip-path: polygon(0 100%, 50% 0, 100% 100%);
-			z-index: 4;
 		}
 
 		.flap {
 			position: absolute;
 			top: 0;
-			left: 0;
 			width: 100%;
 			height: 52%;
 			background: var(--envelope-dark);
 			clip-path: polygon(0 0, 50% 100%, 100% 0);
 			transform-origin: top;
-			z-index: 6;
-			transition: transform 1s cubic-bezier(.77, 0, .18, 1), opacity 0.6s ease;
+			transition: 1s cubic-bezier(.77, 0, .18, 1);
 		}
 
-		/* ================= LETTER (FIXED LAYERING) ================= */
-
+		/* LETTER */
 		.letter {
 			position: fixed;
 			left: 50%;
 			top: 50%;
-
 			transform: translate(-50%, 80%) scale(0.95);
 			opacity: 0;
-
 			width: min(520px, 92vw);
-
 			pointer-events: none;
-
-			z-index: 5; /* BELOW HEADER initially */
-
-			display: flex;
-			justify-content: center;
-			align-items: center;
-
-			transition:
-				transform 1s cubic-bezier(.23, 1, .32, 1),
-				opacity 0.8s ease;
+			z-index: 1;
+			transition: 1s cubic-bezier(.23, 1, .32, 1), opacity 0.8s ease;
 		}
 
 		.envelope-wrapper.open .letter {
 			opacity: 1;
 			transform: translate(-50%, -50%) scale(1);
 			pointer-events: auto;
-			z-index: 999; /* ABOVE EVERYTHING when open */
+			z-index: 999;
 		}
 
 		.letter-card {
 			background: transparent;
 			padding: 0;
-			box-shadow: none;
-			border-radius: 0;
 		}
 
 		.letter-card img {
@@ -169,8 +141,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			object-fit: contain;
 		}
 
-		/* ================= SEAL ================= */
-
+		/* SEAL */
 		.seal {
 			position: absolute;
 			top: 78px;
@@ -181,51 +152,13 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			border-radius: 50%;
 			background: var(--seal);
 			color: white;
-
 			display: flex;
 			align-items: center;
 			justify-content: center;
-
-			font-weight: bold;
 			cursor: pointer;
 			z-index: 10;
-
-			transition: transform 1s cubic-bezier(.2,1,.2,1), opacity 0.8s ease;
+			transition: 0.8s;
 			box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-		}
-
-		/* ================= FOOTER ================= */
-
-		.footer {
-			margin-top: 2.5rem;
-			font-size: 0.95rem;
-			opacity: 0.65;
-			position: relative;
-			z-index: 0;
-		}
-
-		.click-hint {
-			margin-top: 0.6rem;
-			font-size: 0.85rem;
-			opacity: 0;
-			transform: translateY(6px);
-			transition: all 0.5s ease;
-		}
-
-		.click-hint.show {
-			opacity: 0.7;
-			transform: translateY(0);
-		}
-
-		/* ================= OPEN STATE ================= */
-
-		.envelope-wrapper.open {
-			z-index: 50;
-		}
-
-		.envelope-wrapper.open .flap {
-			transform: rotateX(180deg);
-			opacity: 0;
 		}
 
 		.envelope-wrapper.open .seal {
@@ -233,17 +166,28 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			transform: translateX(-50%) scale(1.4) rotate(20deg);
 		}
 
-		/* ================= MOBILE ================= */
+		.footer {
+			margin-top: 2.5rem;
+			font-size: 0.95rem;
+			opacity: 0.65;
+		}
+
+		.click-hint {
+			margin-top: 0.6rem;
+			font-size: 0.85rem;
+			opacity: 0;
+			transform: translateY(6px);
+			transition: 0.5s;
+		}
+
+		.click-hint.show {
+			opacity: 0.7;
+			transform: translateY(0);
+		}
 
 		@media (max-width: 480px) {
-			h1 {
-				font-size: 2.2rem;
-			}
-
-			.envelope-wrapper {
-				width: 310px;
-				height: 240px;
-			}
+			h1 { font-size: 2.2rem; }
+			.envelope-wrapper { width: 310px; height: 240px; }
 		}
 	</style>
 </head>
@@ -254,9 +198,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 	<header class="page-header">
 		<h1>Catherine & Luke</h1>
-		<div class="subtitle" id="subtitle">
-			You are invited
-		</div>
+		<div class="subtitle" id="subtitle">You are invited</div>
 	</header>
 
 	<div class="envelope-wrapper" id="envelope">
@@ -272,7 +214,6 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 
 			<div class="flap"></div>
 			<div class="envelope-front"></div>
-
 			<div class="seal" id="seal">C&L</div>
 		</div>
 
@@ -281,7 +222,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 	<div class="footer">
 		Made by Luke ©
 		<div class="click-hint" id="clickHint">
-			Click the image to open your full invitation
+			Click to open your invitation
 		</div>
 	</div>
 
@@ -316,291 +257,12 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		if (!opened) return;
 		window.open('/invitation.pdf#view=FitH', '_blank');
 	});
-</script>
 
-</body>
-</html>	font-family: Georgia, serif;
-	background: radial-gradient(circle at top, var(--bg1), var(--bg2));
-	color: var(--text);
-	min-height: 100vh;
-
-	display: flex;
-	align-items: flex-start;
-	justify-content: center;
-
-	padding: 2rem;
-	text-align: center;
-	overflow-x: hidden;
-}
-
-main {
-	max-width: 520px;
-	width: 100%;
-	margin-top: 2vh;
-}
-
-		h1 {
-			font-size: clamp(2rem, 4.5vw, 4rem);
-			margin-bottom: 0.4rem;
-			letter-spacing: 2px;
-			white-space: nowrap;
+	setTimeout(() => {
+		if (!opened) {
+			window.open('/invitation.pdf#view=FitH', '_blank');
 		}
-
-		.subtitle {
-			font-size: 1.1rem;
-			opacity: 0.75;
-			margin-bottom: 2.5rem;
-			transition: opacity 0.4s ease;
-		}
-
-		/* ENVELOPE STAGE */
-		.envelope-wrapper {
-			position: relative;
-			width: 360px;
-			height: 280px;
-			margin: 0 auto;
-			perspective: 1200px;
-			z-index: 1;
-		}
-
-		.envelope {
-			position: relative;
-			width: 100%;
-			height: 100%;
-		}
-
-		.envelope-back {
-			position: absolute;
-			inset: 0;
-			background: var(--envelope);
-			border-radius: 14px;
-			box-shadow: 0 18px 40px var(--shadow);
-			z-index: 1;
-		}
-
-		.envelope-front {
-			position: absolute;
-			inset: auto 0 0;
-			height: 58%;
-			background: var(--envelope);
-			clip-path: polygon(0 100%, 50% 0, 100% 100%);
-			z-index: 4;
-		}
-
-		.flap {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 52%;
-			background: var(--envelope-dark);
-			clip-path: polygon(0 0, 50% 100%, 100% 0);
-			transform-origin: top;
-			z-index: 6;
-			transition: transform 1s cubic-bezier(.77, 0, .18, 1), opacity 0.6s ease;
-		}
-
-		/* LETTER */
-		.letter {
-	position: fixed;
-	left: 50%;
-	top: 50%;
-
-	transform: translate(-50%, 80%) scale(0.95);
-	opacity: 0;
-
-	width: min(520px, 92vw);
-
-	pointer-events: none;
-	z-index: 200;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	transition:
-		transform 1s cubic-bezier(.23, 1, .32, 1),
-		opacity 0.8s ease;
-}
-
-.letter-card {
-	background: transparent;
-	padding: 0;
-	box-shadow: none;
-	border-radius: 0;
-
-	width: fit-content;
-	max-width: 90vw;
-	max-height: 70vh;
-}
-
-.letter-card img {
-	width: min(520px, 92vw);
-	height: auto;
-	max-height: 60vh;
-	display: block;
-	object-fit: contain;
-}
-
-
-		/* SEAL */
-		.seal {
-			position: absolute;
-			top: 78px;
-			left: 50%;
-			transform: translateX(-50%);
-			width: 60px;
-			height: 60px;
-			border-radius: 50%;
-			background: var(--seal);
-			color: white;
-
-			display: flex;
-			align-items: center;
-			justify-content: center;
-
-			font-weight: bold;
-			cursor: pointer;
-			z-index: 10;
-
-			transition: transform 1s cubic-bezier(.2,1,.2,1), opacity 0.8s ease;
-			box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-		}
-
-		.seal:hover {
-			transform: translateX(-50%) scale(1.05);
-		}
-
-		/* FOOTER */
-		.footer {
-			margin-top: 2.5rem;
-			font-size: 0.95rem;
-			opacity: 0.65;
-			position: relative;
-			z-index: 0;
-		}
-
-		.click-hint {
-			margin-top: 0.6rem;
-			font-size: 0.85rem;
-			opacity: 0;
-			transform: translateY(6px);
-			transition: all 0.5s ease;
-		}
-
-		.click-hint.show {
-			opacity: 0.7;
-			transform: translateY(0);
-		}
-
-		/* OPEN STATE */
-		.envelope-wrapper.open {
-			z-index: 50;
-		}
-
-		.envelope-wrapper.open .flap {
-			transform: rotateX(180deg);
-			opacity: 0;
-		}
-
-		.envelope-wrapper.open .seal {
-			opacity: 0;
-			transform: translateX(-50%) scale(1.4) rotate(20deg);
-		}
-
-		.envelope-wrapper.open .letter {
-			opacity: 1;
-			transform: translate(-50%, -50%) scale(1);
-			pointer-events: auto;
-		}
-
-		/* MOBILE */
-		@media (max-width: 480px) {
-			h1 {
-				white-space: normal;
-				font-size: 2.2rem;}
-			.envelope-wrapper {
-				width: 310px;
-				height: 240px;
-			}
-		
-			.letter {
-				height: 380px;
-			}
-		}
-	</style>
-</head>
-
-<body>
-
-<main>
-
-	<header class="page-header">
-	<h1>Catherine & Luke</h1>
-	<div class="subtitle" id="subtitle">
-		You are invited
-	</div>
-</header>
-
-	<div class="envelope-wrapper" id="envelope">
-
-		<div class="envelope">
-
-			<div class="envelope-back"></div>
-
-			<div class="letter" id="letter">
-				<div class="letter-card">
-					<img src="/invite-preview.png" alt="Wedding invitation preview" />
-				</div>
-			</div>
-
-			<div class="flap"></div>
-			<div class="envelope-front"></div>
-
-			<div class="seal" id="seal">C&L</div>
-
-		</div>
-
-	</div>
-
-	<div class="footer">
-		Made by Luke ©
-		<div class="click-hint" id="clickHint">
-			Click the image to open your full invitation
-		</div>
-	</div>
-
-</main>
-
-<script>
-	if (localStorage.getItem('wedding_access') !== 'true') {
-		window.location.href = '/';
-	}
-
-	const seal = document.getElementById('seal');
-	const envelope = document.getElementById('envelope');
-	const letter = document.getElementById('letter');
-	const subtitle = document.getElementById('subtitle');
-	const clickHint = document.getElementById('clickHint');
-
-	let opened = false;
-
-	seal.addEventListener('click', () => {
-		if (opened) return;
-		opened = true;
-
-		envelope.classList.add('open');
-
-		setTimeout(() => {
-			subtitle.textContent = 'Your invitation is ready';
-			clickHint.classList.add('show');
-		}, 900);
-	});
-
-	letter.addEventListener('click', () => {
-		if (!opened) return;
-		window.open('/invitation.pdf#view=FitH', '_blank');
-	});
+	}, 5000);
 </script>
 
 </body>
