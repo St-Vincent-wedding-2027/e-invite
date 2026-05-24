@@ -112,34 +112,24 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 		}
 
 		/* LETTER */
-		.letter {
-	position: fixed;
-	left: 50%;
-	top: 50%;
+		.letter-card {
+	background: transparent;
+	padding: 0;
+	box-shadow: none;
+	border-radius: 0;
 
-	transform: translate(-50%, 40%) scale(0.95);
-	width: min(520px, 92vw);
-
-	opacity: 0;
-	pointer-events: none;
-
-	transition: all 1s cubic-bezier(.23, 1, .32, 1);
-	z-index: 200;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	width: fit-content;
+	max-width: 90vw;
+	max-height: 70vh;
 }
 
-		.letter-card {
-			width: 100%;
-			max-height: 70vh;
-			background: white;
-			border-radius: 10px;
-			box-shadow: 0 25px 60px rgba(0,0,0,0.25);
-			overflow: hidden;
-			padding: 10px;
-		}
+.letter-card img {
+	width: min(520px, 92vw);
+	height: auto;
+	max-height: 60vh;
+	display: block;
+	object-fit: contain;
+}
 
 		.letter img {
 			width: 100%;
