@@ -74,7 +74,12 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 			margin: 0 auto;
 			perspective: 1200px;
 		}
-
+		.envelope-wrapper.open ~ .footer {
+	opacity: 0;
+	transform: translateY(10px);
+	pointer-events: none;
+	transition: 0.4s ease;
+}
 		.envelope {
 			position: relative;
 			width: 100%;
@@ -264,7 +269,7 @@ const SITE_DESCRIPTION = "Wedding Invitation";
 	autoOpened = true;
 
 	// redirect instead of popup
-	window.location.assign = '/invitation.pdf#view=FitH';
+	window.location.assign = ('/invitation.pdf#view=FitH');
 }, 5000);
 </script>
 
