@@ -1,545 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Catherine & Luke</title>
+	<meta charset="UTF-8" />
+	<title>{SITE_TITLE}</title>
 
-<meta name="description" content="Wedding Invitation">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="{SITE_DESCRIPTION}" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-:root{
-	--bg1:#faf7f2;
-	--bg2:#f2e8de;
-	--envelope:#e7d6c6;
-	--envelope-dark:#dcc5b2;
-	--seal:#a44c58;
-	--text:#4e4039;
-	--shadow:rgba(0,0,0,.15);
-}
+	<style>
+		:root {
+			--bg1: #faf7f2;
+			--bg2: #f2e8de;
 
-*{box-sizing:border-box;}
+			--envelope: #e8d5c4;
+			--envelope-dark: #d7bea7;
 
-body{
-	margin:0;
-	min-height:100vh;
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	font-family:Georgia,serif;
-	background:linear-gradient(to bottom,var(--bg1),var(--bg2));
-	color:var(--text);
-	overflow:hidden;
-}
+			--seal: #b08d6d;
 
-main{
-	text-align:center;
-	padding:2rem;
-}
-
-h1{
-	font-size:clamp(2.4rem,5vw,3.6rem);
-	font-weight:400;
-	letter-spacing:2px;
-	margin-bottom:1rem;
-	transition:opacity .6s ease, transform .6s ease;
-}
-
-h1.hide{
-	opacity:0;
-	transform:translateY(-10px);
-	pointer-events:none;
-}
-
-.subtitle{
-	font-size:1.1rem;
-	opacity:.75;
-	margin-bottom:2.5rem;
-	transition:opacity .4s ease;
-}
-
-.envelope-wrapper{
-	position:relative;
-	width:360px;
-	height:270px;
-	margin:auto;
-	perspective:1400px;
-}
-
-.envelope{
-	position:relative;
-	width:100%;
-	height:100%;
-	overflow:visible;
-}
-
-.envelope-back{
-	position:absolute;
-	inset:0;
-	background:var(--envelope);
-	border-radius:14px;
-	box-shadow:0 15px 35px var(--shadow);
-	z-index:1;
-	transition:opacity 1s ease;
-}
-
-.envelope-front{
-	position:absolute;
-	left:0;
-	bottom:0;
-	width:100%;
-	height:68%;
-	background:var(--envelope);
-	clip-path:polygon(0 100%,50% 0,100% 100%);
-	z-index:4;
-	transition:opacity 1s ease;
-}
-
-.flap{
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:52%;
-	background:var(--envelope-dark);
-	clip-path:polygon(0 0,50% 100%,100% 0);
-	transform-origin:top;
-	z-index:6;
-	transition:transform 1s cubic-bezier(.77,0,.18,1), opacity 1s ease;
-}
-
-.letter{
-	position:absolute;
-	left:50%;
-	bottom:-240px;
-	transform:translateX(-50%) scale(.96);
-	width:94%;
-	height:430px;
-	opacity:0;
-	z-index:2;
-	border-radius:12px;
-	overflow:hidden;
-	box-shadow:0 15px 35px rgba(0,0,0,.25);
-	transition:all 1.2s cubic-bezier(.22,1,.36,1);
-	pointer-events:none;
-}
-
-.invite-image{
-	width:100%;
-	height:100%;
-	object-fit:contain;
-	background:#fff;
-	display:block;
-}
-
-.seal{
-	position:absolute;
-	top:78px;
-	left:50%;
-	transform:translateX(-50%);
-	width:60px;
-	height:60px;
-	border-radius:50%;
-	background:var(--seal);
-	display:flex;
-	align-items:center;
-	justify-content:center;
-	color:#fff;
-	font-weight:700;
-	z-index:10;
-	cursor:pointer;
-	transition:transform .5s ease, opacity .5s ease;
-}
-
-.click-hint{
-	margin-top:.6rem;
-	font-size:.85rem;
-	opacity:0;
-	transform:translateY(6px);
-	transition:all .6s ease;
-	pointer-events:none;
-}
-
-.click-hint.show{
-	opacity:.7;
-	transform:translateY(0);
-}
-
-.footer{
-	margin-top:2.5rem;
-	font-size:.95rem;
-	opacity:.65;
-	line-height:1.7;
-}
-
-/* OPEN STATE */
-.envelope-wrapper.open .seal{
-	opacity:0;
-	transform:translateX(-50%) scale(1.5) rotate(25deg);
-}
-
-.envelope-wrapper.open .flap{
-	transform:rotateX(180deg) translateY(-30px);
-	opacity:0;
-}
-
-.envelope-wrapper.open .envelope-back,
-.envelope-wrapper.open .envelope-front{
-	opacity:0;
-}
-
-.envelope-wrapper.open .letter{
-	bottom:-20px;
-	opacity:1;
-	transform:translateX(-50%) scale(1);
-	pointer-events:auto;
-	z-index:20;
-}
-
-@media(max-width:480px){
-	.envelope-wrapper{
-		width:310px;
-		height:240px;
-	}
-
-	.letter{
-		height:380px;
-	}
-}
-</style>
-</head>
-
-<body>
-
-<main>
-
-	<h1>Catherine & Luke</h1>
-
-	<div class="subtitle" id="subtitle">Click the seal to open</div>
-
-	<div class="envelope-wrapper" id="envelope">
-
-		<div class="envelope">
-
-			<div class="envelope-back"></div>
-
-			<div class="letter" id="letter">
-				<img src="/Wedding Invite - 1.png" class="invite-image">
-			</div>
-
-			<div class="envelope-front"></div>
-			<div class="flap"></div>
-
-			<div class="seal" id="seal">C&L</div>
-
-		</div>
-	</div>
-
-	<div class="footer">
-		We cannot wait to celebrate with you<br>
-		Made by Luke ©
-
-		<div class="click-hint" id="clickHint">
-			Click image to open your invitation
-		</div>
-	</div>
-
-</main>
-
-<script>
-if (localStorage.getItem('wedding_access') !== 'true') {
-	window.location.href = '/';
-}
-
-const seal = document.getElementById('seal');
-const envelope = document.getElementById('envelope');
-const letter = document.getElementById('letter');
-const clickHint = document.getElementById('clickHint');
-const subtitle = document.getElementById('subtitle');
-const title = document.querySelector('h1');
-
-let opened = false;
-
-seal.addEventListener('click', () => {
-	if (opened) return;
-
-	opened = true;
-	envelope.classList.add('open');
-
-	// 👇 hide heading
-	title.classList.add('hide');
-
-	setTimeout(() => {
-		subtitle.textContent = "Click the invite";
-		clickHint.classList.add('show');
-	}, 800);
-});
-
-letter.addEventListener('click', () => {
-	if (!opened) return;
-	window.open('/invitation.pdf#view=FitH', '_blank');
-});
-</script>
-
-</body>
-</html>		}
-
-		main {
-			text-align: center;
-			padding: 2rem;
+			--text: #3d352f;
+			--shadow: rgba(0, 0, 0, 0.15);
 		}
 
-		h1 {
-			font-size: clamp(2.4rem, 5vw, 3.6rem);
-			font-weight: 400;
-			letter-spacing: 2px;
-			margin-bottom: 1rem;
+		* {
+			box-sizing: border-box;
 		}
 
-		.subtitle {
-			font-size: 1.1rem;
-			opacity: 0.75;
-			margin-bottom: 2rem;
-		}
+		body {
+			margin: 0;
+			font-family: Georgia, serif;
+			background:
+				radial-gradient(circle at top, var(--bg1), var(--bg2));
+			color: var(--text);
+			min-height: 100vh;
 
-		/* ENVELOPE WRAPPER */
-		.envelope-wrapper {
-			position: relative;
-			width: 360px;
-			height: 270px;
-			margin: 0 auto;
-		}
-
-		.envelope {
-			position: relative;
-			width: 100%;
-			height: 100%;
-			z-index: 2;
-		}
-
-		.envelope-back {
-			position: absolute;
-			inset: 0;
-			background: var(--envelope);
-			border-radius: 14px;
-			box-shadow: 0 15px 35px var(--shadow);
-			z-index: 1;
-			transition: opacity 0.8s ease;
-		}
-
-		.envelope-front {
-			position: absolute;
-			left: 0;
-			bottom: 0;
-			width: 100%;
-			height: 68%;
-			background: var(--envelope);
-			clip-path: polygon(0 100%, 50% 0, 100% 100%);
-			z-index: 4;
-			transition: opacity 0.8s ease;
-		}
-
-		.flap {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 52%;
-			background: var(--envelope-dark);
-			clip-path: polygon(0 0, 50% 100%, 100% 0);
-			transform-origin: top;
-			z-index: 6;
-			transition: transform 1s ease, opacity 0.8s ease;
-		}
-
-		.seal {
-			position: absolute;
-			top: 78px;
-			left: 50%;
-			transform: translateX(-50%);
-			width: 60px;
-			height: 60px;
-			border-radius: 50%;
-			background: var(--seal);
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			color: white;
-			font-weight: bold;
-			z-index: 10;
-			cursor: pointer;
-			transition: transform 0.5s ease, opacity 0.5s ease;
+
+			padding: 2rem;
+			text-align: center;
 		}
-
-		/* 🟡 PNG OVERLAY (NO LAYOUT IMPACT) */
-		.invite-wrap {
-			position: absolute;
-			top: 320px; /* sits BELOW envelope visually */
-			left: 50%;
-			transform: translateX(-50%);
-			width: 340px;
-
-			opacity: 0;
-			transform: translate(-50%, 20px);
-			transition: all 1s cubic-bezier(.22,1,.36,1);
-
-			pointer-events: none;
-		}
-
-		.invite-wrap.show {
-			opacity: 1;
-			transform: translate(-50%, 0);
-			pointer-events: auto;
-		}
-
-		.invite-wrap img {
-			width: 100%;
-			display: block;
-			border-radius: 12px;
-			box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-			background: white;
-		}
-
-		.click-hint {
-			margin-top: 0.8rem;
-			font-size: 0.85rem;
-			opacity: 0;
-			transform: translateY(6px);
-			transition: all 0.6s ease;
-		}
-
-		.click-hint.show {
-			opacity: 0.7;
-			transform: translateY(0);
-		}
-
-		.footer {
-			margin-top: 2.5rem;
-			font-size: 0.95rem;
-			opacity: 0.65;
-			line-height: 1.7;
-		}
-
-		/* OPEN STATES */
-		.envelope-wrapper.open .seal {
-			opacity: 0;
-			transform: translateX(-50%) scale(1.5) rotate(25deg);
-		}
-
-		.envelope-wrapper.open .flap {
-			transform: rotateX(180deg) translateY(-30px);
-			opacity: 0;
-		}
-
-		.envelope-wrapper.open .envelope-back,
-		.envelope-wrapper.open .envelope-front {
-			opacity: 0;
-		}
-	</style>
-</head>
-
-<body>
-
-<main>
-
-	<h1>Catherine & Luke</h1>
-
-	<div class="subtitle" id="subtitle">
-		Click the seal to open
-	</div>
-
-	<div class="envelope-wrapper" id="envelope">
-
-		<div class="envelope">
-			<div class="envelope-back"></div>
-			<div class="envelope-front"></div>
-			<div class="flap"></div>
-
-			<div class="seal" id="seal">C&L</div>
-		</div>
-
-		<!-- PNG (FLOATS, NO GAP ISSUES EVER) -->
-		<div class="invite-wrap" id="invite">
-			<img src="/Wedding Invite - 1.png" id="letter" />
-			<div class="click-hint" id="clickHint">
-				Click image to open your invitation
-			</div>
-		</div>
-
-	</div>
-
-	<div class="footer">
-		We cannot wait to celebrate with you<br />
-		Made by Luke ©
-	</div>
-
-</main>
-
-<script>
-	if (localStorage.getItem('wedding_access') !== 'true') {
-		window.location.href = '/';
-	}
-
-	const seal = document.getElementById('seal');
-	const envelope = document.getElementById('envelope');
-	const invite = document.getElementById('invite');
-	const clickHint = document.getElementById('clickHint');
-
-	let opened = false;
-
-	seal.addEventListener('click', () => {
-		if (opened) return;
-
-		opened = true;
-		envelope.classList.add('open');
-		invite.classList.add('show');
-
-		setTimeout(() => {
-			clickHint.classList.add('show');
-		}, 900);
-	});
-
-	invite.addEventListener('click', () => {
-		if (!opened) return;
-		window.open('/invitation.pdf#view=FitH', '_blank');
-	});
-</script>
-
-</body>
-</html>		}
 
 		main {
-			text-align: center;
-			padding: 2rem;
+			max-width: 500px;
+			width: 100%;
 		}
 
 		h1 {
-			font-size: clamp(2.4rem, 5vw, 3.6rem);
-			font-weight: 400;
+			font-size: clamp(2.5rem, 5vw, 4rem);
+			margin-bottom: 0.5rem;
 			letter-spacing: 2px;
-			margin-bottom: 1rem;
 		}
 
 		.subtitle {
 			font-size: 1.1rem;
 			opacity: 0.75;
-			margin-bottom: 2.2rem;
+			margin-bottom: 2.5rem;
+			transition: opacity 0.4s ease;
 		}
 
-		/* ENVELOPE AREA */
+		/* Envelope */
+
 		.envelope-wrapper {
 			position: relative;
 			width: 360px;
-			height: 270px;
+			height: 280px;
 			margin: 0 auto;
-			perspective: 1400px;
-			z-index: 2;
+			perspective: 1200px;
 		}
 
 		.envelope {
 			position: relative;
 			width: 100%;
 			height: 100%;
+			overflow: visible;
 		}
 
 		.envelope-back {
@@ -554,10 +88,8 @@ letter.addEventListener('click', () => {
 
 		.envelope-front {
 			position: absolute;
-			left: 0;
-			bottom: 0;
-			width: 100%;
-			height: 68%;
+			inset: auto 0 0;
+			height: 58%;
 			background: var(--envelope);
 			clip-path: polygon(0 100%, 50% 0, 100% 100%);
 			z-index: 4;
@@ -572,60 +104,86 @@ letter.addEventListener('click', () => {
 			height: 52%;
 			background: var(--envelope-dark);
 			clip-path: polygon(0 0, 50% 100%, 100% 0);
+
 			transform-origin: top;
 			z-index: 6;
-			transition: transform 1s cubic-bezier(.77,0,.18,1), opacity 1s ease;
+
+			transition:
+				transform 1s cubic-bezier(.77, 0, .18, 1),
+				opacity 1s ease;
 		}
 
-		.seal {
-			position: absolute;
-			top: 78px;
-			left: 50%;
-			transform: translateX(-50%);
-			width: 60px;
-			height: 60px;
-			border-radius: 50%;
-			background: var(--seal);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: white;
-			font-weight: bold;
-			z-index: 10;
-			cursor: pointer;
-			transition: transform 0.5s ease, opacity 0.5s ease;
-		}
-
-		/* PNG REVEAL (NO LAYOUT GAP) */
-		.reveal {
-			max-width: 360px;
-			margin: 0 auto;
-			overflow: hidden;
-		}
+		/* Letter */
 
 		.letter {
-			width: 100%;
+			position: absolute;
+			left: 50%;
+			bottom: -240px;
+
+			transform: translateX(-50%) scale(0.96);
+
+			width: 94%;
+			height: 430px;
+
 			opacity: 0;
-			transform: translateY(30px) scale(0.98);
-			transition: all 1.2s cubic-bezier(.22,1,.36,1);
 			pointer-events: none;
-			border-radius: 12px;
-			box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+
+			transition:
+				transform 1.1s cubic-bezier(.23, 1, .32, 1),
+				opacity 0.8s ease;
+
+			z-index: 2;
+		}
+
+		.letter img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			display: block;
 			background: white;
 		}
 
-		.invite-image {
-			width: 100%;
-			display: block;
+		/* Seal */
+
+		.seal {
+			position: absolute;
+			top: 78px;
+			left: 50%;
+
+			transform: translateX(-50%);
+
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+
+			background: var(--seal);
+			color: white;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			font-weight: bold;
+			cursor: pointer;
+
+			z-index: 10;
+
+			transition:
+				transform 0.5s ease,
+				opacity 0.5s ease;
 		}
 
-		/* CLICK HINT */
+		/* Hint */
+
 		.click-hint {
-			margin-top: 0.7rem;
+			margin-top: 0.6rem;
 			font-size: 0.85rem;
+
 			opacity: 0;
 			transform: translateY(6px);
+
 			transition: all 0.6s ease;
+			pointer-events: none;
 		}
 
 		.click-hint.show {
@@ -633,18 +191,23 @@ letter.addEventListener('click', () => {
 			transform: translateY(0);
 		}
 
-		/* FOOTER */
+		/* Footer */
+
 		.footer {
 			margin-top: 2.5rem;
 			font-size: 0.95rem;
-			opacity: 0.65;
 			line-height: 1.7;
+			opacity: 0.65;
 		}
 
-		/* OPEN STATE */
+		/* Open state */
+
 		.envelope-wrapper.open .seal {
 			opacity: 0;
-			transform: translateX(-50%) scale(1.5) rotate(25deg);
+			transform:
+				translateX(-50%)
+				scale(1.5)
+				rotate(25deg);
 		}
 
 		.envelope-wrapper.open .flap {
@@ -652,22 +215,23 @@ letter.addEventListener('click', () => {
 			opacity: 0;
 		}
 
-		.envelope-wrapper.open .envelope-back,
-		.envelope-wrapper.open .envelope-front {
-			opacity: 0;
-		}
-
-		.envelope-wrapper.open + .reveal .letter {
+		.envelope-wrapper.open .letter {
 			opacity: 1;
-			transform: translateY(0) scale(1);
+			transform: translateX(-50%) scale(1);
 			pointer-events: auto;
+			z-index: 20;
 		}
 
-		/* MOBILE */
+		/* Mobile */
+
 		@media (max-width: 480px) {
 			.envelope-wrapper {
 				width: 310px;
 				height: 240px;
+			}
+
+			.letter {
+				height: 380px;
 			}
 		}
 	</style>
@@ -675,75 +239,84 @@ letter.addEventListener('click', () => {
 
 <body>
 
-<main>
+	<main>
 
-	<h1>Catherine & Luke</h1>
+		<h1>Catherine & Luke</h1>
 
-	<div class="subtitle" id="subtitle">
-		Click the seal to open
-	</div>
-
-	<div class="envelope-wrapper" id="envelope">
-
-		<div class="envelope">
-			<div class="envelope-back"></div>
-
-			<div class="seal" id="seal">C&L</div>
-
-			<div class="envelope-front"></div>
-			<div class="flap"></div>
+		<div class="subtitle" id="subtitle">
+			You are invited
 		</div>
 
-	</div>
+		<div class="envelope-wrapper" id="envelope">
 
-	<!-- REVEAL AREA (tight, no giant gap) -->
-	<div class="reveal">
-		<div class="letter" id="letter">
-			<img src="/Wedding Invite - 1.png" class="invite-image" />
+			<div class="envelope">
+
+				<div class="envelope-back"></div>
+
+				<div class="letter" id="letter">
+					<img src="/invite-preview.png" alt="Wedding invitation preview" />
+				</div>
+
+				<div class="flap"></div>
+
+				<div class="envelope-front"></div>
+
+				<div class="seal" id="seal">
+					L&C
+				</div>
+
+			</div>
+
 		</div>
 
-		<div class="click-hint" id="clickHint">
-			Click image to open your invitation
+		<div class="footer">
+
+			Made by Luke ©
+
+			<div class="click-hint" id="clickHint">
+				Click image to open your invitation
+			</div>
+
 		</div>
-	</div>
 
-	<div class="footer">
-		We cannot wait to celebrate with you<br />
-		Made by Luke ©
-	</div>
+	</main>
 
-</main>
+	<script>
+		if (localStorage.getItem('wedding_access') !== 'true') {
+			window.location.href = '/';
+		}
 
-<script>
-	if (localStorage.getItem('wedding_access') !== 'true') {
-		window.location.href = '/';
-	}
+		const seal = document.getElementById('seal');
+		const envelope = document.getElementById('envelope');
+		const letter = document.getElementById('letter');
+		const subtitle = document.getElementById('subtitle');
+		const clickHint = document.getElementById('clickHint');
 
-	const seal = document.getElementById('seal');
-	const envelope = document.getElementById('envelope');
-	const letter = document.getElementById('letter');
-	const clickHint = document.getElementById('clickHint');
-	const subtitle = document.getElementById('subtitle');
+		let opened = false;
 
-	let opened = false;
+		seal.addEventListener('click', () => {
 
-	seal.addEventListener('click', () => {
-		if (opened) return;
+			if (opened) return;
 
-		opened = true;
-		envelope.classList.add('open');
+			opened = true;
 
-		setTimeout(() => {
-			subtitle.textContent = "Click the invite";
-			clickHint.classList.add('show');
-		}, 900);
-	});
+			envelope.classList.add('open');
 
-	letter.addEventListener('click', () => {
-		if (!opened) return;
-		window.open('/invitation.pdf#view=FitH', '_blank');
-	});
-</script>
+			setTimeout(() => {
+				subtitle.textContent = 'Click the invite';
+				clickHint.classList.add('show');
+			}, 800);
+
+		});
+
+		letter.addEventListener('click', () => {
+
+			if (!opened) return;
+
+			window.open('/invitation.pdf#view=FitH', '_blank');
+
+		});
+	</script>
 
 </body>
 </html>
